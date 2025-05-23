@@ -1,0 +1,38 @@
+package com.example.hotelmanagement.model;
+
+public enum JobTitle {
+    MANAGER,
+    NIGHT_DUTY_MANAGER,
+    CEO,
+    CHEF,
+    COOK,
+    HOUSEKEEPER,
+    FRONT_OFFICE,
+    SPA_MANAGER,
+    RECEPTIONIST,
+    SOCIAL_MEDIA_CREATOR,
+    PORTER,
+    CONCIERGE, // greets guests, arranges transport, provides info about the local area, makes restaurant reservations
+    BARTENDER,
+    HR_MANAGER,
+    IT_MANAGER,
+    IT_ANALYST,
+    HELP_DESK_TECHNICIAN,
+    IT_SPECIALIST,
+    NETWORK_ENGINEER,
+    CYBERSECURITY_SPECIALIST,
+    SOFTWARE_DEVELOPER,
+    SYSTEM_ADMINISTRATOR,
+    DATABASE_ADMINISTRATOR,
+    ACCOUNTING_MANAGER,
+    SALES_MANAGER,
+    SECURITY_MANAGER,
+    GUARD,
+    ACCOUNTANT,
+    PARKING_ATTENDANT,
+    EVENT_PLANNER,
+    WAITER,
+    MAINTENANCE_TECHNICIAN,
+    BEVERAGE_MANAGER,
+    LAUNDRY_ATTENDANT
+}
