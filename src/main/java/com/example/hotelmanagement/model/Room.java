@@ -1,9 +1,10 @@
 package com.example.hotelmanagement.model;
-
+import com.example.hotelmanagement.repository.BookingRepository;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +13,9 @@ import java.util.List;
 public class Room {
     @Id
     @GeneratedValue
-    private int roomID;
-    private double pricePerNight;
-    private boolean isAvailable;
+    private int id;
+    private double pricePerNight; // in zlotys
+    private boolean available;
     private String description;
 
     @Enumerated(EnumType.STRING)
@@ -25,9 +26,9 @@ public class Room {
 
     public Room() {}
 
-    public Room(double pricePerNight, boolean isAvailable, String description, RoomType roomType, List<RoomFeature> roomFeatures) {
+    public Room(double pricePerNight, boolean available, String description, RoomType roomType, List<RoomFeature> roomFeatures) {
         this.pricePerNight = pricePerNight;
-        this.isAvailable = isAvailable;
+        this.available = available;
         this.description = description;
         this.roomType = roomType;
         this.roomFeatures = roomFeatures;

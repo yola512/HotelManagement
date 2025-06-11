@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class Client {
     @Id
     @GeneratedValue
-    private long clientID;
+    private long id;
     private String name;
     private String surname;
     private LocalDate birthDate;

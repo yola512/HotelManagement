@@ -8,10 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface EmployeeRepository extends JpaRepository<Employee, Long> {
-    // find employees by Job Title
-    List<Employee> findEmployeeByJobTitle(JobTitle jobTitle);
-
+public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     // find employees with salary greater than x
     List<Employee> findEmployeeBySalaryGreaterThan(double salary);
     List<Employee> findEmployeeBySalaryLessThan(double salary);

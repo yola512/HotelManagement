@@ -13,7 +13,7 @@ import java.time.LocalDate;
 public class Employee {
     @Id
     @GeneratedValue
-    private long employeeID;
+    private int id;
     private String name;
     private String surname;
     private LocalDate birthDate;

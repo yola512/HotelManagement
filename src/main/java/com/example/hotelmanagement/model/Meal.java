@@ -11,7 +11,7 @@ import static com.example.hotelmanagement.model.MealPlan.*;
 public class Meal {
     @Id
     @GeneratedValue
-    private int mealID;
+    private int id;
 
     @Enumerated(EnumType.STRING)
     private MealPlan mealPlanName;
@@ -20,18 +20,16 @@ public class Meal {
     private double breakfastPrice;
     private double lunchPrice;
     private double dinnerPrice;
-    private String dietaryOptions;
 
     public Meal() {}
 
     public Meal(MealPlan mealPlanName, String description, double breakfastPrice, double lunchPrice,
-                double dinnerPrice, String dietaryOptions) {
+                double dinnerPrice) {
         this.mealPlanName = mealPlanName;
         this.description = description;
         this.breakfastPrice = breakfastPrice;
         this.lunchPrice = lunchPrice;
         this.dinnerPrice = dinnerPrice;
-        this.dietaryOptions = dietaryOptions;
     }
 
     public double calculateMealsCost(int numberOfDays) {

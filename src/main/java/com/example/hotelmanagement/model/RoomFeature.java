@@ -11,15 +11,13 @@ import lombok.Getter;
 public class RoomFeature {
     @Id
     @GeneratedValue
-    private int roomFeatureID;
+    private int id;
 
     private String name; // AIR_CONDITIONING, FRIDGE etc
-    private String description;
 
     public RoomFeature() {}
 
-    public RoomFeature(String name, String description) {
+    public RoomFeature(String name) {
         this.name = name;
-        this.description = description;
     }
 }

@@ -11,12 +11,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface RoomRepository extends JpaRepository<Room, Long> {
+public interface RoomRepository extends JpaRepository<Room, Integer> {
     // available rooms
-    List<Room> findRoomByIsAvailableTrue(boolean isAvailable);
+    List<Room> findRoomByAvailableTrue();
 
     // available rooms of specific Room Type
-    List<Room> findRoomByType(RoomType type);
+    List<Room> findRoomByRoomType(RoomType roomType);
 
     // rooms with specific feature
     @Query("SELECT r FROM Room r JOIN r.roomFeatures f WHERE f.name = :featureName")

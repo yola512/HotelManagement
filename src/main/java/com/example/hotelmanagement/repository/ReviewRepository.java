@@ -1,6 +1,8 @@
 package com.example.hotelmanagement.repository;
 
+import com.example.hotelmanagement.model.Client;
 import com.example.hotelmanagement.model.Review;
+import com.example.hotelmanagement.model.Room;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,18 +13,18 @@ import java.util.List;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     // reviews wrote by a specific client
-    List<Review> findReviewByClientID(Long clientID);
+    List<Review> findByClient(Client client);
 
     // reviews regarding specific room
-    List<Review> findReviewByRoomID(int roomID);
+    List<Review> findByRoom(Room room);
     // number of reviews regarding specific room
-    int countReviewByRoomID(int roomID);
+    int countByRoom(Room room);
 
     // reviews with a specific rating
-    List<Review> findReviewByRating(double rating);
+    List<Review> findByRating(double rating);
 
     // reviews with a specific date
-    List<Review>  findReviewByDate(LocalDate date);
-    List<Review>  findReviewByDateAfter(LocalDate date);
-    List<Review>  findReviewByDateBefore(LocalDate date);
+    List<Review>  findByReviewDate(LocalDate reviewDate);
+    List<Review>  findByReviewDateAfter(LocalDate reviewDate);
+    List<Review>  findByReviewDateBefore(LocalDate reviewDate);
 }

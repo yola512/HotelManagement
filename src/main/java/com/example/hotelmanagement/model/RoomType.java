@@ -6,6 +6,6 @@ public enum RoomType {
     DOUBLE, // 1 double bed x 180
     JUNIOR_SUITE, // 1 bedroom (queen bed) + a small living room with sofa x 20
     MEDIUM_SUITE, // 2 bedrooms (2x queen bed) + a small living room with sofa x 5
-    LARGE_SUITE, // 2 bedrooms (1x queen bed, 3x single beds)  + a small living room with sofa x 35
-    PRESIDENTIAL_SUITE // private elevators included x1
+    LARGE_SUITE, // 2 bedrooms (1x queen bed, 3x single beds)  + a small living room with sofa x 30
+    PRESIDENTIAL_SUITE // private elevator included x1
 }
