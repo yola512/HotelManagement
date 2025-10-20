@@ -1,8 +1,6 @@
 package com.example.hotelmanagement.service;
 
 import com.example.hotelmanagement.model.Room;
-import com.example.hotelmanagement.model.RoomFeature;
-import com.example.hotelmanagement.model.RoomType;
 import com.example.hotelmanagement.repository.BookingRepository;
 import com.example.hotelmanagement.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,17 +57,42 @@ public class RoomService {
         roomRepository.deleteById(id);
     }
 
+    public List<Room> filterRooms(String type, List<String> features, Boolean availability, String priceOrder) {
+        List<Room> allRooms = roomRepository.findAll();
 
+        return allRooms.stream()
+                .filter(room -> {
+                    boolean matchesType = (type == null || type.isEmpty()) ||
+                            room.getRoomType().name().equalsIgnoreCase(type);
 
-    public List<Room> getAvailableRooms() {
-        return roomRepository.findRoomByAvailableTrue();
+                    boolean matchesFeatures = (features == null || features.isEmpty()) ||
+                            features.stream().allMatch(f -> {
+                                String normalizedFeature = normalize(f);
+                                return room.getRoomFeatures().stream()
+                                           .anyMatch(rf -> normalize(rf.getName()).equals(normalizedFeature));
+                            });
+
+                    boolean matchesAvailability = (availability == null || room.isAvailable() == availability);
+
+                    return matchesType && matchesFeatures && matchesAvailability;
+                })
+                .sorted((r1, r2) -> {
+                    if ("desc".equalsIgnoreCase(priceOrder)) {
+                        return Double.compare(r2.getPricePerNight(), r1.getPricePerNight());
+                    } else {
+                        return Double.compare(r1.getPricePerNight(), r2.getPricePerNight());
+                    }
+                })
+                .toList();
     }
 
-    public List<Room> getRoomsByRoomType(RoomType roomType) {
-        return roomRepository.findRoomByRoomType(roomType);
+    // removes space, "-", ",", "_", "." and capitalises
+    private String normalize(String text) {
+        if (text == null) return "";
+        return text
+                .trim()
+                .replaceAll("[\\s\\-_,.]+", "")
+                .toUpperCase();
     }
 
-    public List<Room> getRoomsByFeature(RoomFeature feature) {
-        return roomRepository.findRoomByFeature(feature);
-    }
 }

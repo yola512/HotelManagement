@@ -1,13 +1,13 @@
 package com.example.hotelmanagement.controller;
 
 import com.example.hotelmanagement.model.Room;
-import com.example.hotelmanagement.model.RoomFeature;
-import com.example.hotelmanagement.model.RoomType;
 import com.example.hotelmanagement.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -52,18 +52,16 @@ public class RoomController {
     }
 
     // BUSINESS QUERIES
-    @GetMapping("/available")
-    public List<Room> getAvailableRooms() {
-        return roomService.getAvailableRooms();
+    @GetMapping("/filter")
+    public List<Room> filterRooms(@RequestParam(required=false) String type,
+                                  @RequestParam(required = false) String features,
+                                  @RequestParam(required = false) Boolean availability,
+                                  @RequestParam(required = false) String priceOrder) {
+        List<String> featureList = (features != null && !features.isEmpty())
+                ? Arrays.asList(features.split(","))
+                : Collections.emptyList();
+
+        return roomService.filterRooms(type, featureList, availability, priceOrder);
     }
 
-    @GetMapping("/type/{roomType}")
-    public List<Room> getRoomsByRoomType(@PathVariable RoomType roomType) {
-        return roomService.getRoomsByRoomType(roomType);
-    }
-
-    @GetMapping("/feature/{featureName}")
-    public List<Room> getRoomsByFeature(@PathVariable RoomFeature featureName) {
-        return roomService.getRoomsByFeature(featureName);
-    }
 }

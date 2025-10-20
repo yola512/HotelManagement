@@ -14,11 +14,11 @@ public interface MealRepository extends JpaRepository<Meal, Integer> {
     List<Meal> findMealByMealPlanName(MealPlan mealPlanName);
 
     // meals cheaper than selected price
-    @Query("SELECT m FROM Meal m WHERE m.breakfastPrice < :price OR m.lunchPrice < :price OR m.dinnerPrice < :price")
-    List<Meal> findMealsWithAnyPriceLowerThan(double price);
+    @Query("SELECT m FROM Meal m WHERE (m.breakfastPrice + m.lunchPrice + m.dinnerPrice) < :price")
+    List<Meal> findMealsWithTotalPriceLowerThan(double price);
 
     // meals with price greater than selected price
-    @Query("SELECT m FROM Meal m WHERE m.breakfastPrice > :price OR m.lunchPrice > :price OR m.dinnerPrice > :price")
-    List<Meal> findMealsWithAnyPriceGreaterThan(double price);
+    @Query("SELECT m FROM Meal m WHERE (m.breakfastPrice + m.lunchPrice + m.dinnerPrice) > :price")
+    List<Meal> findMealsWithTotalPriceGreaterThan(double price);
 
 }

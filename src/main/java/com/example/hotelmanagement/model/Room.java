@@ -1,10 +1,8 @@
 package com.example.hotelmanagement.model;
-import com.example.hotelmanagement.repository.BookingRepository;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,16 +10,23 @@ import java.util.List;
 @Getter @Setter
 public class Room {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private double pricePerNight; // in zlotys
+    private double pricePerNight;
     private boolean available;
     private String description;
 
     @Enumerated(EnumType.STRING)
     private RoomType roomType;
 
-    @ManyToMany
+    // cascade - an operation (like save or update (hibernate doesn't allow for delete in @ManyToMany relationships with cascade) performed on the parent entity
+    // is automatically extended to the associated child entities
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "room_room_feature", // name of linking table
+            joinColumns = @JoinColumn(name = "room_id"), // column with foreign key to Room
+            inverseJoinColumns = @JoinColumn(name="feature_id") // column with foreign key to RoomFeature
+    )
     private List<RoomFeature> roomFeatures = new ArrayList<>();
 
     public Room() {}

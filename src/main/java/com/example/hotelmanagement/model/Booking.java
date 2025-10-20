@@ -12,7 +12,7 @@ import java.util.List;
 @Getter @Setter
 public class Booking {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private LocalDateTime bookingDate;
     private LocalDate checkInDate;

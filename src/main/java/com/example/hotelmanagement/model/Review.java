@@ -1,17 +1,14 @@
 package com.example.hotelmanagement.model;
-
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.antlr.v4.runtime.misc.NotNull;
-
 import java.time.LocalDate;
 
 @Entity
 @Getter @Setter
 public class Review {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private double rating; // 1.00 - 10.00
     private String comment;

@@ -2,6 +2,7 @@ package com.example.hotelmanagement.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Setter;
 import lombok.Getter;
@@ -10,7 +11,7 @@ import lombok.Getter;
 @Getter @Setter
 public class RoomFeature {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name; // AIR_CONDITIONING, FRIDGE etc

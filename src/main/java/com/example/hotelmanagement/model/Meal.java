@@ -4,13 +4,11 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import static com.example.hotelmanagement.model.MealPlan.*;
-
 @Entity
 @Getter @Setter
 public class Meal {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Enumerated(EnumType.STRING)

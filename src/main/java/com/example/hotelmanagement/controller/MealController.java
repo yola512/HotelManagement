@@ -20,6 +20,22 @@ public class MealController {
         this.mealService = mealService;
     }
 
+    // BUSINESS QUERIES
+    @GetMapping("/plan/{plan}")
+    public List<Meal> getMealsByMealPlanName(@PathVariable MealPlan plan) {
+        return mealService.getMealsByMealPlanName(plan);
+    }
+
+    @GetMapping("/cheaper-than")
+    public List<Meal> getMealsCheaperThan(@RequestParam double price) {
+        return mealService.getMealsCheaperThan(price);
+    }
+
+    @GetMapping("/more-expensive-than")
+    public List<Meal> getMealsMoreExpensiveThan(@RequestParam double price) {
+        return mealService.getMealsMoreExpensiveThan(price);
+    }
+
     // CRUD
     // Get all meals
     @GetMapping
@@ -33,11 +49,12 @@ public class MealController {
         return mealService.getMealById(id);
     }
 
+
     // create a new meal (admin only)
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public Meal createMeal(@RequestBody Meal meal) {
-        return mealService.createMeal(meal);
+        return mealService.createMeal(meal); // nieskonczone
     }
 
     // update meal (admin only)
@@ -59,20 +76,5 @@ public class MealController {
         return ResponseEntity.noContent().build();
     }
 
-    // BUSINESS QUERIES
-    @GetMapping("/plan/{plan}")
-    public List<Meal> getMealsByMealPlanName(@PathVariable MealPlan plan) {
-        return mealService.getMealsByMealPlanName(plan);
-    }
-
-    @GetMapping("/cheaper-than")
-    public List<Meal> getMealsCheaperThan(@RequestParam double price) {
-        return mealService.getMealsCheaperThan(price);
-    }
-
-    @GetMapping("/more-expensive-than")
-    public List<Meal> getMealsMoreExpensiveThan(@RequestParam double price) {
-        return mealService.getMealsMoreExpensiveThan(price);
-    }
 
 }

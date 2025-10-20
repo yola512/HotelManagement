@@ -12,7 +12,6 @@ import com.example.hotelmanagement.repository.EmployeeRepository;
 import com.example.hotelmanagement.repository.ReviewRepository;
 import com.example.hotelmanagement.repository.RoomRepository;
 import com.example.hotelmanagement.service.BookingService;
-import com.example.hotelmanagement.service.ReviewService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +45,7 @@ public class ReportController {
         this.reviewRepository = reviewRepository;
     }
 
-    // FOR NOW, REPORTS WILL BE ONLY VISIBLE TO ADMIN
+    // REPORTS WILL BE ONLY VISIBLE TO ADMIN
 
     // BOOKING REPORTS
     @PreAuthorize("hasRole('ADMIN')")

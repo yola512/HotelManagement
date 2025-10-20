@@ -54,7 +54,7 @@ public class SampleDataLoader implements CommandLineRunner {
 
 
         // sample roomFeatures
-        RoomFeature wifi = roomFeatureRepository.save(new RoomFeature("Wi-Fi"));
+        RoomFeature wifi = roomFeatureRepository.save(new RoomFeature("WiFi"));
         RoomFeature airConditioning = roomFeatureRepository.save(new RoomFeature("Air Conditioning"));
         RoomFeature balcony = roomFeatureRepository.save(new RoomFeature("Balcony"));
         RoomFeature minibar = roomFeatureRepository.save(new RoomFeature("Minibar"));

@@ -29,11 +29,11 @@ public class MealService {
     }
 
     public List<Meal> getMealsCheaperThan(double price) {
-        return mealRepository.findMealsWithAnyPriceLowerThan(price);
+        return mealRepository.findMealsWithTotalPriceLowerThan(price);
     }
 
     public List<Meal> getMealsMoreExpensiveThan(double price) {
-        return mealRepository.findMealsWithAnyPriceGreaterThan(price);
+        return mealRepository.findMealsWithTotalPriceGreaterThan(price);
     }
 
     public Meal createMeal(Meal meal) {
