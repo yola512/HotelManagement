@@ -2,7 +2,7 @@
 
 ## :bowtie: Introduction :bowtie:
 
-The **Hotel Management** is a web application designed for comprehensive management of reservations, rooms, employees, and reviews within a hotel setting. It is built on a stack featuring Spring Boot and a dynamic HTML/JavaScript (Chart.js) frontend, providing stable API endpoints for standard CRUD operations and statistical reporting.
+**Hotel Management** is a web application designed for comprehensive management of reservations, rooms, employees, and reviews within a hotel setting. It is built on a stack featuring Spring Boot and a dynamic HTML/JavaScript (Chart.js) frontend, providing stable API endpoints for standard CRUD operations and statistical reporting.
 
 ## :person_fencing: Key Features:
 ### 1. Reservation Management (Bookings) 📇
