@@ -87,3 +87,26 @@ If you wish to use sample data, run the project with the with the ```SampleDataL
 
 ## 👩🏼‍⚖️ Image Disclaimer:
 All background pictures used in the project come from ```pexels.com``` which offers free stock photos and videos.
+
+
+## Sneak peak: 
+<p align="center">
+  <b>HOMEPAGE</b><br><br>
+  <img width="1455" height="754" alt="homepage" src="https://github.com/user-attachments/assets/e5e83a13-f884-4209-b520-1f0370a7dd3e" />
+  <b>MEALS</b><br><br>
+  <img width="1461" height="811" alt="meals" src="https://github.com/user-attachments/assets/2c2860f0-6b1f-40fa-b658-87683e1687e7" />
+  <b>ROOMS</b><br><br>
+  <img width="1463" height="813" alt="rooms1" src="https://github.com/user-attachments/assets/5a3dfd41-20f6-48e0-9bab-a8f21da81909" /><img width="1455" height="813" alt="room2" src="https://github.com/user-      attachments/assets/817d7f50-3f68-4008-8600-2bca0e6ce030" />
+  <img width="1472" height="808" alt="Screenshot 2025-12-07 at 13 50 07" src="https://github.com/user-attachments/assets/974ecb4c-d2f3-4814-a2dd-4adaf25efeaf" />
+  <b>BOOKINGS</b><br><br>
+  <img width="1467" height="809" alt="bookings1" src="https://github.com/user-attachments/assets/f5542325-2039-464b-9af8-888fec8bfc91" />
+  <img width="1459" height="807" alt="bookings2" src="https://github.com/user-attachments/assets/02c06215-99a8-43f2-9590-8abf2618d5d4" />
+  <b>REVIEWS</b><br><br>
+  <img width="1472" height="808" alt="reviews" src="https://github.com/user-attachments/assets/63085450-c38f-43df-929d-fa24217bb36c" />
+  <b>REPORTS</b><br><br>
+  <img width="1498" height="805" alt="reports1" src="https://github.com/user-attachments/assets/f3dde3da-77ab-41bb-8c81-d06ce0b58915" />
+  <img width="1496" height="809" alt="reports2" src="https://github.com/user-attachments/assets/5b10e448-eadf-4e41-8c7f-5ba7370a3202" />
+  <img width="1351" height="808" alt="reports3" src="https://github.com/user-attachments/assets/2a00e9d2-5072-4f78-8d14-eaef504ca1b1" />
+  <br><br>
+</p>
+
