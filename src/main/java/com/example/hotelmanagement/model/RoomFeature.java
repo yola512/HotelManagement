@@ -15,10 +15,12 @@ public class RoomFeature {
     private int id;
 
     private String name; // AIR_CONDITIONING, FRIDGE etc
+    private boolean active = true;
 
     public RoomFeature() {}
 
     public RoomFeature(String name) {
         this.name = name;
     }
+
 }

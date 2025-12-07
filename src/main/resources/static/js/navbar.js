@@ -10,20 +10,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // sprawdza od razu po załadowaniu (jeśli np. odświeżysz w połowie strony)
+    // checks if user scrolled right after the page is loaded to make sure navbar is displayed as planned
     handleNavbarScroll();
 
-    // nasłuchuje scrolla
+    // scroll listener
     window.addEventListener('scroll', handleNavbarScroll);
 })
-
-// navbar stops being transparent after scroll
-// window.addEventListener('scroll', function() {
-//     const navbar = document.querySelector('.navbar');
-//     if (window.scrollY > 50) {
-//         navbar.classList.add('scrolled');
-//     }
-//     else {
-//         navbar.classList.remove('scrolled');
-//     }
-// });

@@ -29,16 +29,4 @@ public class Meal {
         this.lunchPrice = lunchPrice;
         this.dinnerPrice = dinnerPrice;
     }
-
-    public double calculateMealsCost(int numberOfDays) {
-        double totalCost = 0.00;
-        switch (mealPlanName) {
-            case ALL_INCLUSIVE -> totalCost += (breakfastPrice + lunchPrice + dinnerPrice) * numberOfDays + 100.00;
-            case FULL_BOARD -> totalCost += (breakfastPrice + lunchPrice + dinnerPrice) * numberOfDays;
-            case HALF_BOARD -> totalCost += (breakfastPrice + dinnerPrice) * numberOfDays;
-            case BED_AND_BREAKFAST -> totalCost += breakfastPrice * numberOfDays;
-            default -> totalCost = 0.00;
-        }
-        return totalCost;
-    }
 }

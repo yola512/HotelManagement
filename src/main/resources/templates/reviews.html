@@ -41,33 +41,33 @@
         <!-- Sample review -->
         <div class="card mb-3">
             <div class="card-body">
-                <h5 class="card-title">Review by Anna Nowak</h5>
-                <p class="card-text"><strong>Room:</strong> 204</p>
+                <div class="review-header">
+                    <h5 class="card-title">Review by Anna Nowak</h5>
+                    <div class="stars">
+                        <!-- unicode codes for stars: &#9733 - filled star; &#9734 - empty star -->
+                        &#9733;&#9733;&#9733;&#9733;&#9733;
+                    </div>
+                </div>
+                <p class="card-text"><strong>Room:</strong> 5</p>
                 <p class="card-text">Great service and very clean room. Would stay again!</p>
-                <button class="btn btn-danger btn-sm" onclick="confirmDelete()">Delete</button>
             </div>
         </div>
 
         <div class="card mb-3">
             <div class="card-body">
-                <h5 class="card-title">Review by Piotr Zieliński</h5>
-                <p class="card-text"><strong>Room:</strong> 305</p>
+                <div class="review-header">
+                    <h5 class="card-title">Review by Piotr Zieliński</h5>
+                    <div class="stars">
+                        <!-- unicode codes for stars: &#9733 - filled star; &#9734 - empty star -->
+                        &#9733;&#9733;&#9733;&#9733;&#9734;
+                    </div>
+                </div>
+                <p class="card-text"><strong>Room:</strong> 22</p>
                 <p class="card-text">Room was noisy at night, but the food was excellent.</p>
-                <button class="btn btn-danger btn-sm" onclick="confirmDelete()">Delete</button>
             </div>
         </div>
     </div>
 </div>
-
-<!-- Confirm deleting review-->
-<script>
-    function confirmDelete() {
-        if (confirm("Are you sure you want to delete this review?")) {
-           // to-do: deleting
-            alert("Review deleted (dummy action)");
-        }
-    }
-</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,12 +1,14 @@
 package com.example.hotelmanagement.service;
 
+import com.example.hotelmanagement.exceptionHandler.DeleteException;
+import com.example.hotelmanagement.model.Booking;
 import com.example.hotelmanagement.model.Room;
 import com.example.hotelmanagement.repository.BookingRepository;
 import com.example.hotelmanagement.repository.RoomRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,14 +21,6 @@ public class RoomService {
     public RoomService(RoomRepository roomRepository, BookingRepository bookingRepository) {
         this.roomRepository = roomRepository;
         this.bookingRepository = bookingRepository;
-    }
-
-    // prevent overlapping bookings for the same room
-    public boolean isRoomAvailable(Room room, LocalDate checkInDate, LocalDate checkOutDate) {
-        if (!room.isAvailable()) {
-            return false;
-        }
-        return bookingRepository.findOverlappingBookingsForRoom(room, checkInDate, checkOutDate).isEmpty();
     }
 
     // === CRUD ===
@@ -53,9 +47,26 @@ public class RoomService {
         }).orElseThrow(() -> new RuntimeException("Room not found with id " + id));
     }
 
+    @Transactional
     public void deleteRoom(int id) {
+        Room room = roomRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Room with ID " + id + " not found"));
+
+        // get every booking using this room
+        List<Booking> bookingsWithThisRoom = bookingRepository.findByRooms(room);
+
+        if (!bookingsWithThisRoom.isEmpty()) {
+            // if room is used in booking admin CAN'T delete it unless the booking is deleted -> throw exception and give admin info
+            throw new DeleteException(
+                    "Cannot delete room – it's used in "
+                            + bookingsWithThisRoom.size() + " booking(s)."
+            );
+        }
+
+        room.getRoomFeatures().clear();
         roomRepository.deleteById(id);
     }
+
 
     public List<Room> filterRooms(String type, List<String> features, Boolean availability, String priceOrder) {
         List<Room> allRooms = roomRepository.findAll();

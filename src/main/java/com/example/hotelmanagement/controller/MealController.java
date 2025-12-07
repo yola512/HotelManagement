@@ -54,7 +54,7 @@ public class MealController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public Meal createMeal(@RequestBody Meal meal) {
-        return mealService.createMeal(meal); // nieskonczone
+        return mealService.createMeal(meal);
     }
 
     // update meal (admin only)

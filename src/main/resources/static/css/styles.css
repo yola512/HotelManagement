@@ -119,5 +119,18 @@ h1, h2, h3 {
 
 /**/
 .table-style {
+    background-color: #c8ab72;
+}
 
+/* review stars */
+.stars {
+    color: #c8ab72;
+}
+.stars-empty {
+    color: lightgrey;
+}
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

@@ -38,11 +38,11 @@
 <div class="container mt-4 ">
     <h1 class="mb-4">Meals Management</h1>
 
-    <!-- Filters -->
+    <!-- Filters + add meal button -->
     <div class="row mb-4">
 
         <!-- Filter by meal plan -->
-        <div class="col-md-4">
+        <div class="col-md-3">
             <label for="mealPlanFilter" class="form-label">Filter by Meal Plan</label>
             <select id="mealPlanFilter" class="form-select">
                 <option value="">All</option>
@@ -50,48 +50,56 @@
                 <option value="HALF_BOARD">Half Board</option>
                 <option value="FULL_BOARD">Full Board</option>
                 <option value="ALL_INCLUSIVE">All Inclusive</option>
+                <option value="ROOM_ONLY">Room only</option>
+                <option value="SELF_CATERING">Self catering</option>
             </select>
         </div>
 
         <!-- Filter by price -->
-        <div class="col-md-4">
+        <div class="col-md-3">
             <label class="form-label">Filter by total meal price</label>
             <div class="input-group">
-                <select id="priceOperator" class="form-select" style="max_width: 120px;">
+                <select id="priceOperator" class="form-select">
                     <option value="cheaper-than">&lt;</option>
                     <option value="more-expensive-than">&gt;</option>
                 </select>
                 <input type="number" id="priceValue" class="form-control" placeholder="Price">
-                <button class="btn btn-primary" onclick="filterMealsByPrice()">Filter</button>
+                <button class="btn btn-secondary" onclick="filterMealsByPrice()">Filter</button>
             </div>
         </div>
 
         <!-- Reset filters -->
-        <div class="col-md-4 d-flex align-items-end">
+        <div class="col-md-2 d-flex align-items-end">
             <button class="btn btn-secondary w-100" onclick="resetFilters()">Reset Filters</button>
         </div>
     </div>
 
     <!-- Meal List -->
-    <table class="table table-bordered table-striped">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Meal Plan</th>
-            <th>Description</th>
-            <th>Breakfast Price</th>
-            <th>Lunch Price</th>
-            <th>Dinner Price</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody id="mealTableBody"></tbody>
-    </table>
-
-    <!-- Add meal button -->
-    <div class="mb-3">
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#mealModal" onclick="showAddMealForm()">Add Meal</button>
+    <div class="card">
+        <div class="card-header table-style text-white d-flex justify-content-between align-items-center">
+            Meals
+            <button class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#mealModal"
+                    onclick="showAddMealForm()">Add Meal
+            </button>
+        </div>
+        <div class="card-body">
+            <table class="table table-style table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Meal Plan</th>
+                    <th>Description</th>
+                    <th>Breakfast Price</th>
+                    <th>Lunch Price</th>
+                    <th>Dinner Price</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody id="mealTableBody"></tbody>
+            </table>
+        </div>
     </div>
+
 
     <!-- add/edit modal -->
     <div class="modal fade" id="mealModal" tabindex="-1" aria-labelledby="mealModalLabel" aria-hidden="true">
@@ -112,6 +120,8 @@
                                 <option value="HALF_BOARD">Half Board</option>
                                 <option value="FULL_BOARD">Full Board</option>
                                 <option value="ALL_INCLUSIVE">All Inclusive</option>
+                                <option value="ROOM_ONLY">Room only</option>
+                                <option value="SELF_CATERING">Self catering</option>
                             </select>
                         </div>
                         <div class="mb-2">
@@ -136,6 +146,20 @@
                         </div>
                     </form>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- error pop-up-->
+<div class="modal fade" id="errorModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-danger text-white">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Error</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="errorMessage">
             </div>
         </div>
     </div>
@@ -172,7 +196,7 @@
                 <td>${meal.lunchPrice}</td>
                 <td>${meal.dinnerPrice}</td>
                 <td>
-                    <button class="btn btn-sm btn-primary" onclick="editMeal(${meal.id})">Edit</button>
+                    <button class="btn btn-sm btn-warning" onclick="editMeal(${meal.id})">Edit</button>
                     <button class="btn btn-sm btn-danger" onclick="deleteMeal(${meal.id})">Delete</button>
                 </td>
             `;
@@ -190,11 +214,6 @@
         displayMeals(meals);
     }
 
-    function resetFilters() {
-        document.getElementById("mealPlanFilter").value="";
-        document.getElementById("priceValue").value="";
-        loadMeals();
-    }
     // filtering by meal plan
     document.getElementById("mealPlanFilter").addEventListener("change", async (e) => {
         const plan = e.target.value;
@@ -203,6 +222,12 @@
         const meals = await response.json();
         displayMeals(meals);
     });
+
+    function resetFilters() {
+        document.getElementById("mealPlanFilter").value="";
+        document.getElementById("priceValue").value="";
+        loadMeals();
+    }
 
     async function saveMeal(event) {
         event.preventDefault();
@@ -249,8 +274,16 @@
 
     async function deleteMeal(id) {
         if (!confirm("Are you sure you want to delete this meal?")) return;
-        await fetch(`${API_URL}/${id}`, { method: "DELETE" });
-        await loadMeals();
+
+        const response = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+
+        if (response.ok) {
+            await loadMeals();
+        }
+        else {
+            const errorMessage = await response.text();
+            showErrorPopup(errorMessage);
+        }
     }
 
     function resetForm() {
@@ -263,7 +296,6 @@
         resetForm();
         document.getElementById("formTitle").textContent = "Add new meal";
     }
-
 
     // Initial load
     loadMeals();

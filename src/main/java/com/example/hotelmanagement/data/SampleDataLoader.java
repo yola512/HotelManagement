@@ -2,26 +2,17 @@ package com.example.hotelmanagement.data;
 
 import com.example.hotelmanagement.model.*;
 import com.example.hotelmanagement.repository.*;
-import com.example.hotelmanagement.service.RoomService;
 import jakarta.transaction.Transactional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
 
 @Component
 public class SampleDataLoader implements CommandLineRunner {
-    private static final Logger logger = LoggerFactory.getLogger(SampleDataLoader.class);
-
     @Autowired
     private BookingRepository bookingRepository;
     @Autowired
@@ -31,28 +22,13 @@ public class SampleDataLoader implements CommandLineRunner {
     @Autowired
     private MealRepository mealRepository;
     @Autowired
-    private ReviewRepository reviewRepository;
-    @Autowired
     private RoomRepository roomRepository;
     @Autowired
     private RoomFeatureRepository roomFeatureRepository;
-    @Autowired
-    private RoomService roomService;
-
-    private final Random random = new Random();
 
     @Transactional
     @Override
-    public void run(String... args) throws Exception {
-        // clear existing data
-        bookingRepository.deleteAll();
-        clientRepository.deleteAll();
-        employeeRepository.deleteAll();
-        mealRepository.deleteAll();
-        reviewRepository.deleteAll();
-        roomRepository.deleteAll();
-
-
+    public void run(String... args) {
         // sample roomFeatures
         RoomFeature wifi = roomFeatureRepository.save(new RoomFeature("WiFi"));
         RoomFeature airConditioning = roomFeatureRepository.save(new RoomFeature("Air Conditioning"));
@@ -146,7 +122,7 @@ public class SampleDataLoader implements CommandLineRunner {
 
         // large suite rooms (5 samples/30)
         Room largeSuite1 = new Room(890.00, true, "1 queen + 3 single beds, 2 bedrooms, great for groups", RoomType.LARGE_SUITE,
-                List.of(wifi, airConditioning, tv, freeParking, kitchenette,  queenSizeBed, roomService, desk, heating, bathrobeSlippers, hotTub, sofa, hairDryer));
+                List.of(wifi, airConditioning, tv, freeParking, kitchenette, queenSizeBed, roomService, desk, heating, bathrobeSlippers, hotTub, sofa, hairDryer));
         Room largeSuite2 = new Room(920.00, true, "Large suite with garden view and kitchenette", RoomType.LARGE_SUITE,
                 List.of(wifi, kitchenette, tv, hairDryer, petFriendly, queenSizeBed, minibar, heating, roomService, airConditioning, bathrobeSlippers, hotTub, sofa));
         Room largeSuite3 = new Room(910.00, false, "Spacious suite ideal for families or groups", RoomType.LARGE_SUITE,
@@ -179,7 +155,7 @@ public class SampleDataLoader implements CommandLineRunner {
                 new Employee("Piotr", "Kamiński", LocalDate.of(1988, 1, 18), "piotr.kaminski@example.com", "500600600", JobTitle.HOUSEKEEPER, 5200),
                 new Employee("Magdalena", "Lewandowska", LocalDate.of(1991, 8, 30), "magda.lewandowska@example.com", "500700700", JobTitle.FRONT_OFFICE, 6900),
                 new Employee("Grzegorz", "Szymański", LocalDate.of(1986, 12, 9), "grzegorz.szymanski@example.com", "500800800", JobTitle.SPA_MANAGER, 11000),
-                new Employee("Ewa", "Dąbrowska", LocalDate.of(1994, 10, 28), "ewa.dabrowska@example.com", "500900900", JobTitle.RECEPTIONIST, 6200),
+                new Employee("Ewa", "Frak", LocalDate.of(1994, 10, 28), "ewa.frak@example.com", "500900900", JobTitle.RECEPTIONIST, 6200),
                 new Employee("Mateusz", "Król", LocalDate.of(1993, 11, 14), "mateusz.krol@example.com", "501000001", JobTitle.SOCIAL_MEDIA_CREATOR, 7800),
                 new Employee("Robert", "Bąk", LocalDate.of(1986, 3, 10), "robert.bak@example.com", "501000002", JobTitle.PORTER, 5900),
                 new Employee("Natalia", "Górska", LocalDate.of(1991, 6, 3), "natalia.gorska@example.com", "501000003", JobTitle.CONCIERGE, 7200),
@@ -223,100 +199,26 @@ public class SampleDataLoader implements CommandLineRunner {
 
         // sample meals
         mealRepository.saveAll(List.of(
-                new Meal(MealPlan.ALL_INCLUSIVE, "All meals and drinks included", 40.0, 65.0, 60.0),
-                new Meal(MealPlan.FULL_BOARD, "Breakfast, lunch, and dinner included",  38.0, 60.0, 55.0),
+                new Meal(MealPlan.ALL_INCLUSIVE, "All 3 meals, snacks and drinks included", 40.0, 65.0, 60.0),
+                new Meal(MealPlan.FULL_BOARD, "Breakfast, lunch, and dinner included", 38.0, 60.0, 55.0),
                 new Meal(MealPlan.HALF_BOARD, "Breakfast and dinner included", 35.0, 0.0, 50.0),
                 new Meal(MealPlan.BED_AND_BREAKFAST, "Only breakfast included", 32.0, 0.0, 0.0),
                 new Meal(MealPlan.ROOM_ONLY, "No meals included; room without kitchen", 0.0, 0.0, 0.0),
-                new Meal(MealPlan.SELF_CATERING, "No meals; room with kitchen facilities", 0.0, 0.0, 0.0),
-
-                new Meal(MealPlan.ALL_INCLUSIVE, "Family special: all meals, snacks, and drinks", 42.0, 68.0, 63.0),
-                new Meal(MealPlan.FULL_BOARD, "Full 3 meals: breakfast, lunch and dinner", 40.0, 65.0, 60.0),
-                new Meal(MealPlan.HALF_BOARD, "Romantic dinner package", 34.0, 0.0, 52.0),
-                new Meal(MealPlan.BED_AND_BREAKFAST, "Simple morning meal plan", 30.0, 0.0, 0.0)
+                new Meal(MealPlan.SELF_CATERING, "No meals; room with kitchen facilities", 0.0, 0.0, 0.0)
         ));
-        // generate random bookings
-        generateRandomBookings(5);
-    }
 
-    private void generateRandomBookings(int numOfBookings) {
-        List<Client> clients = clientRepository.findAll();
-        List<Employee> employees = employeeRepository.findAll();
-        List<Meal> meals = mealRepository.findAll();
-        List<Room> rooms = roomRepository.findAll();
-        BookingStatus[] statuses = BookingStatus.values();
-
-        if (clients.isEmpty() || employees.isEmpty() || meals.isEmpty() || rooms.isEmpty() || statuses.length == 0) {
-            logger.warn("Cannot generate more bookings: either one or many required entities are missing");
-            return;
-        }
-
-        List<Booking> bookings = new ArrayList<>();
-        for (int i = 0; i < numOfBookings; i++) {
-            // random booking date (within the last 30 days to next 30 days)
-            LocalDateTime bookingDate = LocalDateTime.now()
-                    .minusDays(random.nextInt(30))
-                    .plusDays(random.nextInt(30));
-
-            // random check-in date (today or up to 60 days in the future)
-            LocalDate checkinDate = LocalDate.now().plusDays(random.nextInt(60));
-
-            // random stay duration (1 to 7 nights)
-            int stayDuration = random.nextInt(7) + 1;
-            LocalDate checkoutDate = checkinDate.plusDays(stayDuration);
-
-            // random client
-            Client client = clients.get(random.nextInt(clients.size()));
-
-            // random employee (preferably frontOfficeEmployee or receptionist)
-            List<Employee> frontOfficeEmployee = employees.stream()
-                    .filter(e-> e.getJobTitle() == JobTitle.FRONT_OFFICE || e.getJobTitle() == JobTitle.RECEPTIONIST)
-                    .collect(Collectors.toList());
-            Employee employee = frontOfficeEmployee.isEmpty() ? employees.get(random.nextInt(employees.size())) :
-                    frontOfficeEmployee.get(random.nextInt(frontOfficeEmployee.size()));
-
-            // random meal
-            Meal meal = meals.get(random.nextInt(meals.size()));
-
-            // select available rooms for the date range
-            List<Room> availableRooms = rooms.stream()
-                    .filter(room -> roomService.isRoomAvailable(room, checkinDate, checkoutDate))
-                    .collect(Collectors.toList());
-
-            if (availableRooms.isEmpty()) {
-                logger.warn("No available rooms on dates {} - {}", checkinDate, checkoutDate);
-                continue;
-            }
-
-            // random number of rooms connected to 1 booking
-            int numRooms = random.nextInt(Math.min(3, availableRooms.size())) + 1;
-            List<Room> selectedRooms = new ArrayList<>();
-            Collections.shuffle(availableRooms, random);
-            for (int j = 0; j < numRooms; j++) {
-                selectedRooms.add(availableRooms.get(j));
-            }
-
-            // random booking status
-            BookingStatus status = statuses[random.nextInt(statuses.length)];
-
-            // create booking
-            Booking booking = new Booking(
-                    bookingDate,
-                    checkinDate,
-                    checkoutDate,
-                    availableRooms,
-                    client,
-                    employee,
-                    meal,
-                    status
-            );
-            bookings.add(booking);
-        }
-        bookingRepository.saveAll(bookings);
-        logger.info("Successfully generated {} random bookings", bookings.size());
-    }
-    // prevent overlapping bookings for the same room
-    private boolean isRoomAvailable(Room room, LocalDate checkinDate, LocalDate checkoutDate) {
-        return bookingRepository.findOverlappingBookingsForRoom(room, checkinDate, checkoutDate).isEmpty();
+        // sample bookings
+        bookingRepository.saveAll(List.of(
+                // booking 1: 3 single rooms, 3 nights, confirmed, self catering
+                new Booking(LocalDateTime.now().minusDays(5),
+                        LocalDate.now().plusDays(10),
+                        LocalDate.now().plusDays(13),
+                        List.of(singleRoom1, singleRoom5, singleRoom7),
+                        clientRepository.findAll().get(4),
+                        employeeRepository.findAll().get(2),
+                        mealRepository.findAll().get(5),
+                        2355.00,
+                        BookingStatus.CONFIRMED)
+        ));
     }
 }

@@ -1,8 +1,12 @@
 package com.example.hotelmanagement.service;
 
+import com.example.hotelmanagement.exceptionHandler.DeleteException;
+import com.example.hotelmanagement.model.Booking;
 import com.example.hotelmanagement.model.Meal;
 import com.example.hotelmanagement.model.MealPlan;
+import com.example.hotelmanagement.repository.BookingRepository;
 import com.example.hotelmanagement.repository.MealRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,9 +15,11 @@ import java.util.Optional;
 @Service
 public class MealService {
     private final MealRepository mealRepository;
+    private final BookingRepository bookingRepository;
 
-    public MealService(MealRepository mealRepository) {
+    public MealService(MealRepository mealRepository, BookingRepository bookingRepository) {
         this.mealRepository = mealRepository;
+        this.bookingRepository = bookingRepository;
     }
 
     public List<Meal> getAllMeals() {
@@ -54,7 +60,22 @@ public class MealService {
                 .orElseThrow(() -> new RuntimeException("Meal with ID " + id + " not found"));
     }
 
+    @Transactional
     public void deleteMeal(int id) {
+        Meal meal = mealRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Meal with ID " + id + " not found"));
+
+        // get every booking using this meal
+        List<Booking> bookingsWithThisMeal = bookingRepository.findByMeal(meal);
+
+        if (!bookingsWithThisMeal.isEmpty()) {
+            // if meal is used in booking admin CAN'T delete it unless the booking is deleted -> throw exception and give admin info
+            throw new DeleteException(
+                    "Cannot delete meal – it's used in "
+                            + bookingsWithThisMeal.size() + " booking(s)."
+            );
+        }
+
         mealRepository.deleteById(id);
     }
 }
